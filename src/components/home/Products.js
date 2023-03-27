@@ -1,10 +1,6 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
-import ApiIcon from "@mui/icons-material/Api";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/amazonSlice";
 
@@ -30,32 +26,7 @@ const Products = () => {
               alt="ProductImg"
             />
             {/* ================== Product mini drop down Start here ============ */}
-            <ul className="absolute w-full h-36 bg-gray-100 -bottom-[160px] group-hover:bottom-0 duration-700 flex flex-col justify-center items-end gap-2">
-              <li className="productLi">
-                Compare
-                <span>
-                  <ApiIcon />
-                </span>
-              </li>
-              <li className="productLi">
-                Add to Cart
-                <span>
-                  <ShoppingCartIcon />
-                </span>
-              </li>
-              <li className="productLi">
-                View Details{" "}
-                <span>
-                  <ArrowCircleRightIcon />
-                </span>
-              </li>
-              <li className="productLi">
-                Add to Wish List{" "}
-                <span>
-                  <FavoriteIcon />
-                </span>
-              </li>
-            </ul>
+            
             {/* ================== Product mini drop down End here ============== */}
           </div>
           {/* ========== Product Image End here ================ */}

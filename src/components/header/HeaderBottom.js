@@ -37,7 +37,7 @@ const HeaderBottom = () => {
       {/* ======================= List Items End here ========================== */}
       {/* ======================= SideBar Start here =========================== */}
       {sidebar && (
-        <div className="w-full h-screen text-black fixed top-0 left-0 bg-amazon_blue bg-opacity-50">
+        <div className="w-full h-screen text-black fixed top-0 left-0 bg-[rgba(0,0,0,0.8)] bg-opacity-50">
           <div className="w-full h-full relative">
             <motion.div
               ref={ref}
@@ -88,19 +88,14 @@ const HeaderBottom = () => {
               {/* ============================ Content & Devices End here ================ */}
               <span
                 onClick={() => setSidebar(false)}
-                className="cursor-pointer absolute top-0 left-[300px] md:left-[360px] w-10 h-10 text-black flex items-center justify-center border bg-gray-200 hover:bg-red-500 hover:text-white duration-300"
+                className="cursor-pointer absolute top-0 left-[300px] md:left-[360px] w-10 h-10 text-white flex items-center justify-center -ml-2 mt-1"
               >
-                <CloseIcon />
+                <CloseIcon fontSize="large" />
               </span>
             </motion.div>
           </div>
         </div>
       )}
-      {/* ======================= SideBar End here ============================= */}
-      {/* ============ ListItems Start here ============ */}
-      {/* ============ ListItems End here ============== */}
-      {/* ============ sideNav Start here ============== */}
-      {/* ============ sideNav End here ================ */}
     </div>
   );
 };

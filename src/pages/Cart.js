@@ -59,39 +59,61 @@ const Cart = () => {
                         Unit Price:{" "}
                         <span className="font-semibold">${item.price}</span>
                       </p>
-                      <div className="bg-[#F0F2F2] flex justify-center items-center gap-2 w-36 py-1 text-center drop-shadow-lg rounded-md">
-                        <p className="text-base font-normal">Qty:</p>
-                        <p
-                          onClick={() => {
-                            dispatch(decreaseQuantity(item._id));
-                          }}
-                          className="cursor-pointer bg-gray-200 px-2 rounded-sm hover:bg-gray-400 font-semibold duration-300"
+                      <div className="flex justify-start items-center gap-4">
+                        {" "}
+                        <div className="bg-[#F0F2F2] flex justify-center items-center gap-2 w-36 py-1 text-center drop-shadow-lg rounded-md">
+                          <p className="text-base font-normal">Qty:</p>
+                          <p
+                            onClick={() => {
+                              dispatch(decreaseQuantity(item._id));
+                            }}
+                            className="cursor-pointer bg-gray-200 px-2 rounded-sm hover:bg-gray-400 font-semibold duration-300"
+                          >
+                            -
+                          </p>
+                          <p className="font-titleFont text-base font-semibold text-amazon_blue">
+                            {item.quantity}
+                          </p>
+                          <p
+                            onClick={() => dispatch(increaseQuantity(item._id))}
+                            className="cursor-pointer bg-gray-200 px-2 rounded-sm hover:bg-gray-400 font-semibold duration-300"
+                          >
+                            +
+                          </p>
+                        </div>
+                        <span className="text-gray-200">|</span>
+                        <button
+                          onClick={() => dispatch(deleteItem(item._id))}
+                          className="text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#C7511F] hover:underline underline-offset-2 hover:text-[#C7511F] duration-300"
                         >
-                          -
-                        </p>
-                        <p className="font-titleFont text-base font-semibold text-amazon_blue">
-                          {item.quantity}
-                        </p>
-                        <p
-                          onClick={() => dispatch(increaseQuantity(item._id))}
-                          className="cursor-pointer bg-gray-200 px-2 rounded-sm hover:bg-gray-400 font-semibold duration-300"
+                          Delete
+                        </button>
+                        <span className="hidden xl:flex text-gray-200">|</span>
+                        <button
+                          className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300"
                         >
-                          +
-                        </p>
+                          Save for later
+                        </button>
+                        <span className="hidden xl:flex text-gray-200">|</span>
+                        <button
+                          className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300"
+                        >
+                            Compare with similar items
+                        </button>
+                        <span className="hidden xl:flex text-gray-200">|</span>
+                        <button
+                          className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300"
+                        >
+                          Share
+                        </button>
                       </div>
-                      <button
-                        onClick={() => dispatch(deleteItem(item._id))}
-                        className="bg-red-500 w-36 py-1 rounded-lg text-white mt-2 hover:bg-red-700 active:bg-red-900 duration-300"
-                      >
-                        Delete Item
-                      </button>
                     </div>
                     {/* ====================== Left End here ============================== */}
                     {/* ====================== Right Start here =========================== */}
 
                     <div className="w-full md:w-24">
                       <p className="text-lg xl:w-24 font-titleFont font-semibold">
-                        ${item.price * item.quantity}
+                        {Math.abs(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
                     {/* ====================== Right End here ============================= */}
@@ -101,7 +123,7 @@ const Cart = () => {
             </div>
             {/* ====================== Products End here =========================== */}
             <div onClick={() => dispatch(resetCart())} className="w-full py-4">
-              <button className="px-10 py-2 bg-red-500 hover:bg-red-600 active:bg-red-500 text-white rounded-lg font-titleFont font-semibold text-lg tracking-wide">
+              <button className="text-sm text-[#007185] font-medium decoration-transparent hover:decoration-[#C7511F] hover:underline underline-offset-2 hover:text-[#C7511F] duration-300">
                 Clear Cart
               </button>
             </div>
@@ -110,7 +132,10 @@ const Cart = () => {
             <div>
               <p className="flex gap-2 items-start text-sm">
                 <span>
-                  <CheckCircleIcon className="bg-white text-green-500 rounded-full" />
+                  <CheckCircleIcon
+                    fontSize="small"
+                    className="bg-white text-[#067D62] rounded-full"
+                  />
                 </span>
                 Your order qualifies for FREE Shipping Choose this option at
                 checkout. See details....

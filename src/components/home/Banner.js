@@ -1,171 +1,76 @@
-import React, { useState } from "react";
 import Slider from "react-slick";
-import {
-  bannerImgOne,
-  bannerImgTwo,
-  bannerImgThree,
-  bannerImgFour,
-  bannerImgFive,
-} from "../../assets/index";
+import { CgChevronLeft } from "react-icons/cg";
+const data = [
+  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61Ly9zlsGxL._SX1500_.jpg",
+  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61TD5JLGhIL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61jovjd+f9L._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/61um60VOoeL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61BvxKSpy3L._SX3000_.jpg",
+  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/71qid7QFWJL._SX3000_.jpg"
+]
 
+function SampleNextArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      onClick={onClick}
+      className="absolute top-1 left-1 w-20 lgl:h-[345px] mdl:h-[275px] sml:h-[255px] xs:h-[150px] xl:h-[235px] border-2 border-transparent hover:border-[#007185] z-10 cursor-pointer flex items-center justify-center duration-300 rounded-md active:border-[#007185]"
+    >
+      <CgChevronLeft className="text-6xl z-10" />
+      <CgChevronLeft className="text-6xl absolute left-[12px] text-whiteText" />
+    </div>
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      onClick={onClick}
+      className="absolute top-1 right-1 w-20 lgl:h-[345px] mdl:h-[275px] sml:h-[255px] xs:h-[150px] xl:h-[235px] border-2 border-transparent hover:border-[#007185] z-10 cursor-pointer flex items-center justify-center duration-300 rounded-md active:border-[#007185]"
+    >
+      <CgChevronLeft className="text-6xl rotate-180 z-10" />
+      <CgChevronLeft className="text-6xl rotate-180 absolute right-[12px] text-whiteText" />
+    </div>
+  );
+}
 const Banner = () => {
-  const [dotActive, setDocActive] = useState(0);
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
-    autoplay: true,
+    speed: 1000,
     slidesToShow: 1,
+    autoplay: true,
     slidesToScroll: 1,
-    arrows: false,
-    beforeChange: (prev, next) => {
-      setDocActive(next);
-    },
-    appendDots: (dots) => (
-      <div
-        style={{
-          position: "absolute",
-          top: "70%",
-          left: "50%",
-          transform: "translate(-50%, 0)",
-          width: "210px",
-        }}
-      >
-        <ul
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          {dots}
-        </ul>
-      </div>
-    ),
-    customPaging: (i) => (
-      <div
-        style={
-          i === dotActive
-            ? {
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                background: "#131921",
-                padding: "8px 0",
-                cursor: "pointer",
-                border: "1px solid #f3a847",
-              }
-            : {
-                width: "30px",
-                height: "30px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "#232F3E",
-                color: "white",
-                padding: "8px 0",
-                cursor: "pointer",
-                border: "1px solid white",
-              }
-        }
-      >
-        {i + 1}
-      </div>
-    ),
-    responsive: [
-      {
-        breakpoint: 500,
-        settings: {
-          dots: true,
-          appendDots: (dots) => (
-            <div
-              style={{
-                position: "absolute",
-                top: "60%",
-                left: "50%",
-                transform: "translate(-50%, 0)",
-                width: "150px",
-              }}
-            >
-              <ul
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  fontSize: "12px",
-                }}
-              >
-                {" "}
-                {dots}{" "}
-              </ul>
-            </div>
-          ),
-          customPaging: (i) => (
-            <div
-              style={
-                i === dotActive
-                  ? {
-                      width: "25px",
-                      height: "25px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "white",
-                      background: "#131921",
-                      padding: "8px 0",
-                      cursor: "pointer",
-                      border: "1px solid #f3a847",
-                    }
-                  : {
-                      width: "25px",
-                      height: "25px",
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "#232F3E",
-                      color: "white",
-                      padding: "8px 0",
-                      cursor: "pointer",
-                      border: "1px solid white",
-                    }
-              }
-            >
-              0{i + 1}
-            </div>
-          ),
-        },
-      },
-    ],
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
   return (
-    <div className="w-full">
-      <div className="w-full h-full relative">
-        <Slider {...settings}>
-          <div>
-            <img src={bannerImgOne} alt="bannerImgOne" />
-          </div>
-          <div>
-            <img src={bannerImgTwo} alt="bannerImgTwo" />
-          </div>
-          <div>
-            <img src={bannerImgThree} alt="bannerImgThree" />
-          </div>
-          <div>
-            <img src={bannerImgFour} alt="bannerImgFour" />
-          </div>
-          <div>
-            <img src={bannerImgFive} alt="bannerImgFive" />
-          </div>
-        </Slider>
-      </div>
+    <div className="max-w-container mx-auto relative">
+      <Slider {...settings}>
+        <div>
+          <img src={data[0]} priority={true} alt="bannerOne" />
+        </div>
+        <div>
+          <img src={data[1]} alt="bannerTwo" />
+        </div>
+        <div>
+          <img src={data[2]} alt="bannerThree" />
+        </div>
+        <div>
+          <img src={data[3]} alt="bannerFour" />
+        </div>
+        <div>
+          <img src={data[4]} alt="bannerFive" />
+        </div>
+        <div>
+          <img src={data[5]} alt="bannerSix" />
+        </div>
+        <div>
+          <img src={data[6]} alt="bannerSeven" />
+        </div>
+      </Slider>
     </div>
   );
 };
