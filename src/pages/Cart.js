@@ -40,7 +40,7 @@ const Cart = () => {
             <div>
               {products.map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className="w-full border-b-[1px] border-b-gray-300 p-4 md:p-0 md:py-4 flex items-center gap-6"
                 >
                   <div className="w-full flex flex-col md:flex-row items-center gap-6">
@@ -63,7 +63,7 @@ const Cart = () => {
                         <p className="text-base font-normal">Qty:</p>
                         <p
                           onClick={() => {
-                            dispatch(decreaseQuantity(item.id));
+                            dispatch(decreaseQuantity(item._id));
                           }}
                           className="cursor-pointer bg-gray-200 px-2 rounded-sm hover:bg-gray-400 font-semibold duration-300"
                         >
@@ -73,14 +73,14 @@ const Cart = () => {
                           {item.quantity}
                         </p>
                         <p
-                          onClick={() => dispatch(increaseQuantity(item.id))}
+                          onClick={() => dispatch(increaseQuantity(item._id))}
                           className="cursor-pointer bg-gray-200 px-2 rounded-sm hover:bg-gray-400 font-semibold duration-300"
                         >
                           +
                         </p>
                       </div>
                       <button
-                        onClick={() => dispatch(deleteItem(item.id))}
+                        onClick={() => dispatch(deleteItem(item._id))}
                         className="bg-red-500 w-36 py-1 rounded-lg text-white mt-2 hover:bg-red-700 active:bg-red-900 duration-300"
                       >
                         Delete Item

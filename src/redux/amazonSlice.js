@@ -11,7 +11,7 @@ export const amazonSlice = createSlice({
     // ============= Product Reducers Start here ===============
     // Add to cart
     addToCart: (state, action) => {
-      const item = state.products.find((item) => item.id === action.payload.id);
+      const item = state.products.find((item) => item._id === action.payload._id);
       if (item) {
         item.quantity += action.payload.quantity;
       } else {
@@ -19,13 +19,13 @@ export const amazonSlice = createSlice({
       }
     },
     increaseQuantity: (state, action) => {
-      const item = state.products.find((item) => item.id === action.payload);
+      const item = state.products.find((item) => item._id === action.payload);
       if (item) {
         item.quantity++;
       }
     },
     decreaseQuantity: (state, action) => {
-      const item = state.products.find((item) => item.id === action.payload);
+      const item = state.products.find((item) => item._id === action.payload);
       if (item.quantity === 1) {
         item.quantity = 1;
       } else {
@@ -35,7 +35,7 @@ export const amazonSlice = createSlice({
     // Delete item from cart
     deleteItem: (state, action) => {
       state.products = state.products.filter(
-        (item) => item.id !== action.payload
+        (item) => item._id !== action.payload
       );
     },
     // Reset cart to initial state
