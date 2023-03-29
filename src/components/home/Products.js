@@ -12,7 +12,7 @@ const Products = () => {
     <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 xl:gap-4 px-4">
       {productsData.map((item) => (
         <div
-          key={item._id}
+          key={item.id}
           className="bg-white h-auto border-[1px] border-gray-200 py-6 z-30 hover:border-transparent shadow-none hover:shadow-testShadow duration-200 relative flex flex-col gap-4"
         >
           <span className="text-xs capitalize italic absolute top-2 right-2 text-gray-500">
@@ -51,7 +51,7 @@ const Products = () => {
               onClick={() =>
                 dispatch(
                   addToCart({
-                    _id: item._id,
+                    id: item.id,
                     title: item.title,
                     description: item.description,
                     price: item.price,

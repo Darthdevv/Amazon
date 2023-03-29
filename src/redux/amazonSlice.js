@@ -10,7 +10,7 @@ export const amazonSlice = createSlice({
   reducers: {
  
     addToCart: (state, action) => {
-      const item = state.products.find((item) => item._id === action.payload._id);
+      const item = state.products.find((item) => item.id === action.payload.id);
       if (item) {
         item.quantity += action.payload.quantity;
       } else {
@@ -19,14 +19,14 @@ export const amazonSlice = createSlice({
     },
  
     increaseQuantity: (state, action) => {
-      const item = state.products.find((item) => item._id === action.payload);
+      const item = state.products.find((item) => item.id === action.payload);
       if (item) {
         item.quantity++;
       }
     },
  
     decreaseQuantity: (state, action) => {
-      const item = state.products.find((item) => item._id === action.payload);
+      const item = state.products.find((item) => item.id === action.payload);
       if (item.quantity === 1) {
         item.quantity = 1;
       } else {
@@ -36,7 +36,7 @@ export const amazonSlice = createSlice({
  
     deleteItem: (state, action) => {
       state.products = state.products.filter(
-        (item) => item._id !== action.payload
+        (item) => item.id !== action.payload
       );
     },
  
