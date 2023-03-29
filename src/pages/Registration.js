@@ -15,17 +15,13 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // Error Message start
   const [errClientName, setErrClientName] = useState("");
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
   const [errCPassword, setErrCPassword] = useState("");
   const [firebaseErr, setFirebaseErr] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  // Loading State start
 
-
-  // Handle funtion start
   const handleName = (e) => {
     setClientName(e.target.value);
     setErrClientName("");
@@ -45,14 +41,12 @@ const Registration = () => {
     setErrCPassword("");
   };
 
-  // Email validation start
   const emailValidation = (email) => {
     return String(email)
       .toLowerCase()
       .match(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/);
   };
 
-  // Submit button start
   const handleRegistration = (e) => {
     e.preventDefault();
     if (!clientName) {

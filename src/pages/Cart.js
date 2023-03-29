@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import StripeCheckout from "react-stripe-checkout";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   deleteItem,
   resetCart,
@@ -13,8 +16,10 @@ import { Link } from "react-router-dom";
 
 const Cart = () => {
   const products = useSelector((state) => state.amazonReducer.products);
+  const userInfo = useSelector((state) => state.amazonReducer.userInfo);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const [payNow,setPayNow] = useState(false);
   const [totalAmt, setTotalAmt] = useState("");
   useEffect(() => {
     let price = 0;
@@ -25,12 +30,29 @@ const Cart = () => {
     setTotalAmt(price.toFixed(2));
   }, [products]);
 
+  const handleCheckout = () => {
+    if (userInfo) {
+      setPayNow(true);
+    } else {
+      console.log("Please sign in to Checkout");
+      setTimeout(() => {
+        navigate("/signin")
+      })
+      
+    }
+  };
+  const payment = async (token) => {
+    await axios.post("http://localhost:8000/pay", {
+      amount: totalAmt * 100,
+      token: token,
+    });
+  };
+
   return (
     <div className="w-full bg-gray-100 p-4">
       {products.length > 0 ? (
         <div className="container mx-auto h-auto grid grid-cols-5 gap-8">
           <div className="w-full bg-white px-4 col-span-5 xl:col-span-4">
-
             <div className="font-titleFont hidden xl:flex items-center justify-between border-b-[1px] border-b-gray-400 py-3">
               <h1 className="text-3xl font-semibold">Shopping Cart</h1>
               <h3 className="text-xl font-semibold">Subtotal</h3>
@@ -43,7 +65,6 @@ const Cart = () => {
                   className="w-full border-b-[1px] border-b-gray-300 p-4 md:p-0 md:py-4 flex items-center gap-6"
                 >
                   <div className="w-full flex flex-col md:flex-row items-center gap-6">
-
                     <div className="w-full md:w-2/5 xl:w-1/5">
                       <img
                         className="w-full h-44 object-contain"
@@ -88,33 +109,25 @@ const Cart = () => {
                           Delete
                         </button>
                         <span className="hidden xl:flex text-gray-200">|</span>
-                        <button
-                          className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300"
-                        >
+                        <button className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300">
                           Save for later
                         </button>
                         <span className="hidden xl:flex text-gray-200">|</span>
-                        <button
-                          className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300"
-                        >
-                            Compare with similar items
+                        <button className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300">
+                          Compare with similar items
                         </button>
                         <span className="hidden xl:flex text-gray-200">|</span>
-                        <button
-                          className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300"
-                        >
+                        <button className="hidden xl:flex text-xs text-[#007185] font-medium decoration-transparent hover:decoration-[#007185] hover:underline underline-offset-2 hover:text-[#007185] duration-300">
                           Share
                         </button>
                       </div>
                     </div>
-
 
                     <div className="w-full md:w-24">
                       <p className="text-lg xl:w-24 font-titleFont font-semibold">
                         {Math.abs(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
-
                   </div>
                 </div>
               ))}
@@ -126,7 +139,7 @@ const Cart = () => {
               </button>
             </div>
           </div>
-          <div className="col-span-5 md:col-span-3 lg:col-span-2 xl:col-span-1 bg-white h-52 flex items-center p-4">
+          <div className="col-span-5 md:col-span-3 lg:col-span-2 xl:col-span-1 bg-white h-60 flex items-center p-4">
             <div>
               <p className="flex gap-2 items-start text-sm">
                 <span>
@@ -143,9 +156,25 @@ const Cart = () => {
                   Total: <span className="text-lg font-bold">${totalAmt}</span>
                 </p>
               </div>
-              <button className="w-full font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-200 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-700 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-200 py-1.5 rounded-md mt-3">
+              <button
+                onClick={handleCheckout}
+                className="w-full font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-200 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-700 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-200 py-1.5 rounded-md mt-3"
+              >
                 Proceed to Buy
               </button>
+              {payNow && (
+                <div className="w-full mt-6 flex justify-center items-center">
+                  <StripeCheckout
+                    stripeKey="pk_test_51MpeqYGWGLA2Lp5BcXQvWWux3ZzuVNB7EXignj2pIcoHnJSltXqaG2lnojMFK4KbBpmlB28Y9uDFaBAnoFy1CMHX00thVF0pBw"
+                    name="Amazon Clone"
+                    amount={totalAmt * 100}
+                    label="Payment"
+                    description={`Your payment aount is ${totalAmt}`}
+                    token={payment}
+                    email={userInfo.email}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -179,7 +208,6 @@ const Cart = () => {
           </div>
         </motion.div>
       )}
-
     </div>
   );
 };
