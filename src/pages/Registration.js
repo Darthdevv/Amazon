@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { darkLogo } from "../assets/index";
+import { amazon } from "../assets/index";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { ColorRing } from "react-loader-spinner";
+import { motion } from "framer-motion";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 const Registration = () => {
+  const auth = getAuth();
+  const navigate = useNavigate();
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   // Error Message start
   const [errClientName, setErrClientName] = useState("");
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
   const [errCPassword, setErrCPassword] = useState("");
+  const [firebaseErr, setFirebaseErr] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   // Loading State start
 
 
@@ -25,6 +33,7 @@ const Registration = () => {
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail("");
+    setFirebaseErr("")
   
   };
   const handlePassword = (e) => {
@@ -80,20 +89,46 @@ const Registration = () => {
       cPassword &&
       cPassword === password
     ) {
-      // =========== Firebase Registration End here ===============
+      setLoading(true);
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          updateProfile(auth.currentUser, {
+            displayName: clientName,
+            photoURL:
+              "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2680&q=80",
+          });
+
+          const user = userCredential.user;
+          console.log(user)
+          setLoading(false);
+          setSuccessMsg("Account created successfully")
+          setTimeout(() => {
+            navigate("/signin")
+          },3000)
+
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode.includes("auth/email-already-in-use")) {
+            setFirebaseErr("Email already in use !")
+          }
+
+        });
       setClientName("");
       setEmail("");
       setPassword("");
       setCPassword("");
       setErrCPassword("");
+      setFirebaseErr("");
     }
   };
   return (
     <div className="w-full">
-      <div className="w-full bg-gray-100 pb-10">
+      <div className="w-full bg-white pb-10">
         <form className="w-[370px] mx-auto flex flex-col items-center">
           <Link to="/">
-            <img className="w-32" src={darkLogo} alt="darkLogo" />
+            <img className="w-32 -mb-[30px]" src={amazon} alt="darkLogo" />
           </Link>
           <div className="w-full border border-zinc-200 p-6">
             <h2 className="font-titleFont text-3xl font-medium mb-4">
@@ -135,7 +170,14 @@ const Registration = () => {
                     {errEmail}
                   </p>
                 )}
-                
+                {firebaseErr && (
+                  <p className="text-red-600 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5">
+                    <span className="italic font-titleFont font-extrabold text-base">
+                      !
+                    </span>
+                    {firebaseErr}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <p className="text-sm font-medium">Password</p>
@@ -180,6 +222,38 @@ const Registration = () => {
               >
                 Continue
               </button>
+              {loading && (
+                <div className="flex justify-center">
+                  <ColorRing
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="blocks-wrapper"
+                    colors={[
+                      "#f1b04c",
+                      "#ee9f27",
+                      "#ec9006",
+                      "#e88504",
+                      "#e27602",
+                    ]}
+                  />
+                </div>
+              )}
+              {successMsg && (
+                <div>
+                  <motion.p
+                  initial={{y:10,opacity:0}}
+                  animate={{y:0,opacity:1}}
+                  transition={{duration:0.5}}
+                  className='text-base font-titleFont font-semibold text-green-500 px-2 text-center flex items-center justify-center gap-1'
+                  >
+                    <CheckCircleIcon className="text-green-500 flex justify-center items-center"/>
+                    {successMsg}
+                  </motion.p>
+                </div>
+              )}
             </div>
             <p className="text-xs text-black leading-4 mt-4">
               By Continuing, you agree to Amazon's{" "}
@@ -208,7 +282,7 @@ const Registration = () => {
           </div>
         </form>
       </div>
-      <div className="w-full bg-gradient-to-t from-white via-white to-zinc-200 flex flex-col gap-4 justify-center items-center py-10">
+      <div className="w-full bg-gradient-to-r from-[#fff] via-[rgba(255,255,255,0)] to-[#fff] flex flex-col gap-4 justify-center items-center py-10">
         <div className="flex items-center gap-6">
           <p className="text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100">
             Conditions of Use

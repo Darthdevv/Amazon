@@ -1,15 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   products: [],
-  userInfo: [],
+  userInfo: null,
 };
 
 export const amazonSlice = createSlice({
   name: "amazon",
   initialState,
   reducers: {
-    // ============= Product Reducers Start here ===============
-    // Add to cart
+ 
     addToCart: (state, action) => {
       const item = state.products.find((item) => item._id === action.payload._id);
       if (item) {
@@ -18,12 +17,14 @@ export const amazonSlice = createSlice({
         state.products.push(action.payload);
       }
     },
+ 
     increaseQuantity: (state, action) => {
       const item = state.products.find((item) => item._id === action.payload);
       if (item) {
         item.quantity++;
       }
     },
+ 
     decreaseQuantity: (state, action) => {
       const item = state.products.find((item) => item._id === action.payload);
       if (item.quantity === 1) {
@@ -32,21 +33,25 @@ export const amazonSlice = createSlice({
         item.quantity--;
       }
     },
-    // Delete item from cart
+ 
     deleteItem: (state, action) => {
       state.products = state.products.filter(
         (item) => item._id !== action.payload
       );
     },
-    // Reset cart to initial state
+ 
     resetCart: (state) => {
       state.products = [];
     },
-    // ============= Product Reducers End here =================
-    // ============= UserInfo Reducers Start here ==============
-    // User authentication
  
-    // ============= UserInfo Reducers End here ================
+    LogIn: (state,action) => {
+      state.userInfo = action.payload;
+    },
+ 
+    LogOut: (state) => {
+      state.userInfo = null;
+    },
+ 
   },
 });
 
@@ -56,6 +61,7 @@ export const {
   resetCart,
   increaseQuantity,
   decreaseQuantity,
-
+  LogIn,
+  LogOut
 } = amazonSlice.actions;
 export default amazonSlice.reducer;

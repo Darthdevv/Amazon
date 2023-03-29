@@ -8,6 +8,8 @@ import bannerImgFive from "./banner/bannerImgFive.jpg";
 import bdFlag from "./bdFlag.webp";
 import emptyCart from "./emptyCart.png";
 import egyptFlag from "./egypt-flag.webp";
+import amazon from './pngimg.com - amazon_PNG21.png'
+
 export {
   logo,
   darkLogo,
@@ -18,5 +20,6 @@ export {
   bannerImgFive,
   bdFlag,
   emptyCart,
-  egyptFlag
+  egyptFlag,
+  amazon
 };

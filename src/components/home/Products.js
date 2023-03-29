@@ -18,19 +18,16 @@ const Products = () => {
           <span className="text-xs capitalize italic absolute top-2 right-2 text-gray-500">
             {item.category}
           </span>
-          {/* ========== Product Image Start here ============== */}
+
           <div className="w-full h-auto flex items-center justify-center relative group">
             <img
               className="w-52 h-64 object-contain"
               src={item.image}
               alt="ProductImg"
             />
-            {/* ================== Product mini drop down Start here ============ */}
-            
-            {/* ================== Product mini drop down End here ============== */}
+
           </div>
-          {/* ========== Product Image End here ================ */}
-          {/* ========== Product Info Start here =============== */}
+
           <div className="px-4 bg-white flex flex-col gap-1 z-10">
             <div className="flex items-center justify-between">
               <h2 className="font-titleFont tracking-wide text-lg text-amazon_blue font-medium">
@@ -69,15 +66,7 @@ const Products = () => {
               Add to Cart
             </button>
           </div>
-          {/* ========== Product Info End here ================= */}
-          {/* ============ Product Image Start here ======== */}
 
-          {/* ============ Product drop-down Start here ==== */}
-          {/* ============ Product drop-down End here ====== */}
-
-          {/* ============ Product Image End here ========== */}
-          {/* ============ Product Info Start here ========= */}
-          {/* ============ Product Info End here =========== */}
         </div>
       ))}
     </div>

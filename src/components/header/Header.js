@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -9,8 +9,12 @@ import { allItems } from "../../constants";
 import { logo } from "../../assets/index";
 import HeaderBottom from "./HeaderBottom";
 import { Link } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
+import { LogOut } from "../../redux/amazonSlice";
 
 const Header = () => {
+  const auth = getAuth();
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.amazonReducer.products);
   const userInfo = useSelector((state) => state.amazonReducer.userInfo);
   const ref = useRef();
@@ -24,18 +28,27 @@ const Header = () => {
     });
   }, [ref, showAll]);
 
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(LogOut());
+        console.log('logged out');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
+  }
   return (
     <div className="sticky top-0 z-50">
       <div className="w-full bg-amazon_blue text-white px-4 py-3 flex md:justify-between items-center gap-2 md:gap-4 lgl:gap-2 xl:gap-4">
-        {/* ===================== Header Image Start here ======================== */}
+
         <Link to="/">
           <div className="headerHover">
             <img className="w-24 mt-2" src={logo} alt="logoImage" />
           </div>
         </Link>
-        {/* ===================== Header Image End here ========================== */}
-        {/* ===================== Header Deliver Start here ====================== */}
+
         <div className="hidden md:inline-flex headerHover">
           <LocationOnOutlinedIcon />
           <p className="flex flex-col text-xs text-lightText font-light">
@@ -45,8 +58,7 @@ const Header = () => {
             </span>
           </p>
         </div>
-        {/* ===================== Header Deliver End here ======================== */}
-        {/* ===================== Header Search Start here ======================== */}
+
         <div className="hidden lgl:inline-flex h-10 rounded-md flex-grow relative">
           <span
             onClick={() => setShowAll(!showAll)}
@@ -76,22 +88,27 @@ const Header = () => {
           )}
 
           <input
-            className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
+            className="h-full font-titleFont text-base text-amazon_blue flex-grow outline-none border-none px-2"
             type="text"
+            placeholder="Search Amazon"
           />
           <span className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
             <SearchIcon />
           </span>
         </div>
-        {/* ===================== Header Search End here ========================== */}
-        {/* ===================== Header Signin Start here ======================== */}
+
         <Link to="/signin">
           <div className="flex flex-col items-start justify-center headerHover">
-           
+            {userInfo ? (
+              <p className="text-xs text-lightText font-light">
+                {" "} {userInfo.userName}
+              </p>
+            ) : (
               <p className="text-xs text-lightText font-light">
                 Hello, sign in
               </p>
-           
+            )}
+
             <p className="hidden md:inline-flex text-sm font-semibold -mt-1 text-whiteText">
               Accounts & Lists{" "}
               <span>
@@ -100,14 +117,12 @@ const Header = () => {
             </p>
           </div>
         </Link>
-        {/* ===================== Header Signin End here ========================== */}
-        {/* ===================== Header Orders Start here ======================== */}
+
         <div className="hidden mdl:flex flex-col items-start justify-center headerHover">
           <p className="text-xs text-lightText font-light">Returns</p>
           <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
         </div>
-        {/* ===================== Header Orders End here ========================== */}
-        {/* ===================== Header Cart Start here ========================== */}
+
         <Link to="/cart">
           <div className="flex items-start justify-center headerHover relative">
             <ShoppingCartIcon />
@@ -120,29 +135,14 @@ const Header = () => {
           </div>
         </Link>
         {userInfo && (
-          <div
-            
-            className="flex flex-col justify-center items-center headerHover relative"
-          >
+          <div onClick={handleLogout} className="flex flex-col justify-center items-center headerHover relative">
             <LogoutIcon />
             <p className="hidden mdl:inline-flex text-xs font-semibold text-whiteText">
               Log out
             </p>
           </div>
         )}
-        {/* ===================== Header Cart End here ============================ */}
-        {/* ============ Image Start here ================ */}
-        {/* ============ Image End here ================== */}
-        {/* ============ Deliver Start here ============== */}
-        {/* ============ Deliver End here ================ */}
-        {/* ============ Search Start here =============== */}
-        {/* ============ Search End here ================= */}
-        {/* ============ Signin Start here =============== */}
-        {/* ============ Signin End here ================= */}
-        {/* ============ Orders Start here =============== */}
-        {/* ============ Orders End here ================= */}
-        {/* ============ Cart Start here ================= */}
-        {/* ============ Cart End here =================== */}
+        
       </div>
       <HeaderBottom />
     </div>

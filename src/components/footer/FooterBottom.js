@@ -4,7 +4,7 @@ import { footerBottomItem } from "../../constants";
 const FooterBottom = () => {
   return (
     <div className="w-full bg-footerBottom py-8">
-      {/* ======================= Top start here ====================== */}
+
       <div className="max-w-5xl mx-auto">
         <div className="w-full grid grid-cols-3 md:grid-cols-5 lgl:grid-cols-7 gap-3 px-6 place-content-center items-start text-gray-400">
           {footerBottomItem.map((item) => (
@@ -15,8 +15,7 @@ const FooterBottom = () => {
           ))}
         </div>
       </div>
-      {/* ======================= Top End here ======================== */}
-      {/* ======================= Bottom Start here =================== */}
+
       <div className="flex flex-col justify-center items-center px-4">
         <div>
           <ul className="text-gray-300 text-sm gap-2 md:gap-4 py-2 mt-4 flex">
@@ -37,11 +36,7 @@ const FooterBottom = () => {
           </p>
         </div>
       </div>
-      {/* ======================= Bottom End here ===================== */}
-      {/* ============ Top Start here ================== */}
-      {/* ============ Top End here ==================== */}
-      {/* ============ Bottom Start here =============== */}
-      {/* ============ Bottom End here ================= */}
+
     </div>
   );
 };
