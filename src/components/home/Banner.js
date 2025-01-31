@@ -1,14 +1,14 @@
 import Slider from "react-slick";
 import { CgChevronLeft } from "react-icons/cg";
 const data = [
-  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61Ly9zlsGxL._SX1500_.jpg",
-  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61TD5JLGhIL._SX3000_.jpg",
-  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61jovjd+f9L._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/71m5s4DCkfL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/61fuygyR4lL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/61J5yIX+A5L._SX3000_.jpg",
   "https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg",
   "https://m.media-amazon.com/images/I/61um60VOoeL._SX3000_.jpg",
-  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/61BvxKSpy3L._SX3000_.jpg",
-  "https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/71qid7QFWJL._SX3000_.jpg"
-]
+  "https://m.media-amazon.com/images/I/612-T5YABuL._SX3000_.jpg",
+  "https://m.media-amazon.com/images/I/71DQMiLiGZL._SX3000_.jpg",
+];
 
 function SampleNextArrow(props) {
   const { onClick } = props;
